@@ -1,0 +1,130 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+@import "tailwindcss";
+
+/* ─── Exact tokens from Chrome DevTools inspection ─── */
+:root {
+  --bg:           #060610;   /* rgb(6,6,16) body */
+  --bg-card:      #0F0A22;   /* rgb(15,10,34) cards / blog */
+  --bg-section:   #291F55;   /* rgb(41,31,85) purple sections */
+  --bg-mid:       #373058;   /* rgb(55,48,88) mid purple */
+  --accent:       #694AF9;   /* rgb(105,74,249) primary */
+  --accent-dark:  #3E2C93;
+  --accent-light: #8b6dfa;
+  --white:        #ffffff;
+  --muted:        rgba(255,255,255,0.55);
+  --border:       rgba(255,255,255,0.08);
+  --border-card:  rgba(255,255,255,0.06);
+  --radius-pill:  60px;
+  --radius-card:  20px;
+}
+
+/* NOTE: do NOT add an un-layered `* { margin:0; padding:0 }` reset here.
+   Tailwind v4 emits every utility inside `@layer`, and un-layered rules win
+   over layered ones in the cascade — such a reset silently zeroes every
+   padding/margin utility (py-*, px-*, pt-[…], mb-*, …). Tailwind's preflight
+   already handles box-sizing and margin resets inside its own layer. */
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--white);
+  font-family: 'Inter', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* ─── Scrollbar ─── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--accent-dark); border-radius: 3px; }
+
+/* ─── Marquee / Ticker animations ─── */
+@keyframes marquee       { to { transform: translateX(-50%); } }
+@keyframes marquee-rev   { from { transform: translateX(-50%); } to { transform: translateX(0); } }
+.marquee-track     { animation: marquee     28s linear infinite; }
+.marquee-track-rev { animation: marquee-rev 28s linear infinite; }
+.marquee-track:hover, .marquee-track-rev:hover { animation-play-state: paused; }
+
+/* ─── Gradient text ─── */
+.text-gradient {
+  background: linear-gradient(135deg, #fff 0%, #c9bdfb 55%, #694AF9 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ─── Primary button — exact Nexaro inset glow ─── */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 31px 10px 10px;   /* icon sits in left pad */
+  border-radius: var(--radius-pill);
+  background: var(--accent);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  box-shadow: inset 0 -4.8px 24px 1px rgba(202,205,255,0.55);
+  transition: transform 0.25s cubic-bezier(0.22,1,0.36,1), box-shadow 0.25s ease, filter 0.25s ease;
+}
+.btn-primary:hover {
+  transform: scale(1.04);
+  box-shadow: inset 0 -4.8px 24px 1px rgba(202,205,255,0.75), 0 10px 34px rgba(105,74,249,0.45);
+  filter: brightness(1.04);
+}
+
+/* ─── Secondary (ghost pill) — exact Nexaro values ─── */
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 18px 43px;
+  border-radius: var(--radius-pill);
+  background: var(--bg-section);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  box-shadow: inset 0 4px 10px 1px rgba(255,255,255,0.25);
+  transition: transform 0.25s cubic-bezier(0.22,1,0.36,1), background 0.25s ease;
+}
+.btn-secondary:hover {
+  background: #332765;
+  transform: scale(1.04);
+}
+
+/* ─── Cards ─── */
+.card {
+  border-radius: var(--radius-card);
+  background: var(--bg-card);
+  border: 1px solid var(--border-card);
+  overflow: hidden;
+  transition: border-color 0.3s ease, transform 0.3s ease;
+}
+.card:hover { border-color: rgba(105,74,249,0.3); transform: translateY(-4px); }
+
+/* ─── Grid background ─── */
+.bg-grid {
+  background-image:
+    linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+  background-size: 64px 64px;
+}
+
+/* ─── Glow blobs ─── */
+.glow-hero   { background: radial-gradient(ellipse 70% 55% at 50% -10%, rgba(105,74,249,0.28) 0%, transparent 70%); }
+.glow-bottom { background: radial-gradient(ellipse 80% 60% at 50% 110%, rgba(105,74,249,0.18) 0%, transparent 70%); }
+
+/* ─── Edge fade masks for marquees ─── */
+.fade-x {
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+          mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track, .marquee-track-rev { animation: none; }
+  * { scroll-behavior: auto; }
+}
